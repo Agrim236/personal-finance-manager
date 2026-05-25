@@ -15,7 +15,6 @@ public class RegisterRequest {
 
     @NotBlank(message = "Password is mandatory")
     @Size(min = 8, message = "Password must be at least 8 characters long")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).+$", message = "Password must contain letters and numbers")
     private String password;
 
     @NotBlank(message = "Full name is mandatory")

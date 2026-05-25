@@ -198,13 +198,13 @@ api_test() {
         curl_cmd+=(-H "Content-Type: application/json" -d "$data")
     fi
 
-    # Add cookie handling
-    if [ -n "$cookie_file" ] && [ -f "$cookie_file" ]; then
-        curl_cmd+=(-b "$cookie_file")
-    fi
-
-    if [ -n "$save_cookies" ]; then
-        curl_cmd+=(-c "$save_cookies")
+    # Cookie jar: always read and write the same file so session stays in sync (required on HTTPS/Render)
+    local session_jar="${cookie_file:-$save_cookies}"
+    if [ -n "$session_jar" ]; then
+        curl_cmd+=(-c "$session_jar")
+        if [ -f "$session_jar" ]; then
+            curl_cmd+=(-b "$session_jar")
+        fi
     fi
 
     # Add endpoint URL

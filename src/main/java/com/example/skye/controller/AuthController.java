@@ -3,10 +3,8 @@ package com.example.skye.controller;
 import com.example.skye.dto.LoginRequest;
 import com.example.skye.dto.RegisterRequest;
 import com.example.skye.service.UserService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,15 +50,8 @@ public class AuthController {
         context.setAuthentication(authentication);
         SecurityContextHolder.setContext(context);
 
-        HttpSession session = httpRequest.getSession(true);
+        httpRequest.getSession(true);
         securityContextRepository.saveContext(context, httpRequest, httpResponse);
-
-        Cookie sessionCookie = new Cookie("JSESSIONID", session.getId());
-        sessionCookie.setPath("/");
-        sessionCookie.setHttpOnly(true);
-        sessionCookie.setMaxAge(-1);
-        sessionCookie.setSecure(httpRequest.isSecure());
-        httpResponse.addCookie(sessionCookie);
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "Login successful");
