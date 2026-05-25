@@ -259,6 +259,25 @@ api_test() {
     return 0
 }
 
+# Refresh user1 session (prevents 401 after long test runs on Render) — not counted in the 86 tests
+relogin_user1() {
+    rm -f user1_session.txt
+    echo -e "${CYAN}→ Refresh user1 session (helper)${NC}"
+    local full_response
+    full_response=$(curl -s -w "%{http_code}" -X POST -H "Content-Type: application/json" \
+        -c user1_session.txt -d "{
+            \"username\": \"$USER1_EMAIL\",
+            \"password\": \"securePassword123\"
+        }" "$BASE_URL/auth/login" 2>/dev/null)
+    local status="${full_response: -3}"
+    if [ "$status" -ge 200 ] && [ "$status" -lt 300 ]; then
+        echo -e "  ${GREEN}✓ Session refreshed${NC} (status $status)"
+    else
+        echo -e "  ${RED}✗ Session refresh failed${NC} (status $status) — ${full_response%???}"
+    fi
+    echo ""
+}
+
 # Function to print scenario headers
 print_scenario() {
     echo ""
@@ -727,6 +746,8 @@ api_test "Update non-existent goal" "4xx" "PUT" "/goals/999999" '{
 #=============================================================================
 # SCENARIO 5: TRANSACTION DELETION IMPACT ON GOALS AND REPORTS
 #=============================================================================
+relogin_user1
+
 print_scenario "SCENARIO 5: TRANSACTION DELETION IMPACT ON GOALS AND REPORTS"
 echo "This scenario tests that deleted transactions:"
 echo "• No longer affect goal progress calculations"
@@ -788,6 +809,8 @@ api_test "Delete non-existent goal" "4xx" "DELETE" "/goals/999999" "" "user1_ses
 #=============================================================================
 # SCENARIO 6: REPORTS GENERATION WITH CALCULATIONS
 #=============================================================================
+relogin_user1
+
 print_scenario "SCENARIO 6: REPORTS GENERATION WITH CALCULATIONS"
 echo "This scenario tests report generation including:"
 echo "• Monthly reports with income/expense breakdown (expects 2xx success)"
@@ -870,6 +893,7 @@ api_test "Second user cannot update first user's transaction" "4xx" "PUT" "/tran
 api_test "Second user cannot delete first user's goal" "4xx" "DELETE" "/goals/$GOAL_ID_1" "" "user2_session.txt"
 
 print_section "7.4 Independent User Operations"
+relogin_user1
 api_test "Second user creates own transaction" "2xx" "POST" "/transactions" '{
     "amount": 3000.00,
     "date": "2024-01-20",
@@ -908,6 +932,8 @@ validate_response_value "$LAST_RESPONSE" "\"id\":" "3" "count"
 #=============================================================================
 # SCENARIO 8: COMPREHENSIVE USER JOURNEY
 #=============================================================================
+relogin_user1
+
 print_scenario "SCENARIO 8: COMPREHENSIVE USER JOURNEY"
 echo "This scenario tests a complete user workflow including:"
 echo "• Setting up categories and transactions"

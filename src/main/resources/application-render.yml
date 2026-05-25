@@ -9,13 +9,18 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: false
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+    timeout: 480m
 
 server:
   port: ${PORT:8080}
   forward-headers-strategy: framework
   servlet:
     session:
-      timeout: 60m
+      timeout: 480m
       cookie:
         name: JSESSIONID
         path: /

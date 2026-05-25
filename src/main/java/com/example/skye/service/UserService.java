@@ -31,8 +31,7 @@ public class UserService {
     }
 
     public Map<String, Object> registerUser(RegisterRequest request) {
-        if (userRepository.existsByUsername(request.getUsername())) {
-            // Throws a clean 409 Conflict if email registration profile matches a duplicate entry
+        if (userRepository.existsByUsername(request.getUsername().trim())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username/Email already exists");
         }
 
