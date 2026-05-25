@@ -12,3 +12,8 @@ spring:
 
 server:
   port: ${PORT:8080}
+  servlet:
+    session:
+      cookie:
+        secure: true
+        same-site: lax

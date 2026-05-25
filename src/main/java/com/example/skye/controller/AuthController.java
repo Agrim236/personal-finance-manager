@@ -59,7 +59,7 @@ public class AuthController {
         sessionCookie.setPath("/");
         sessionCookie.setHttpOnly(true);
         sessionCookie.setMaxAge(-1);
-        sessionCookie.setSecure(false);
+        sessionCookie.setSecure(httpRequest.isSecure());
         httpResponse.addCookie(sessionCookie);
 
         Map<String, String> response = new HashMap<>();

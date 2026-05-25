@@ -18,6 +18,12 @@ public class SessionHeaderFilter extends OncePerRequestFilter {
     private static final String SESSION_HEADER = "X-Session-Id";
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        return uri != null && uri.endsWith("/api/auth/register");
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
