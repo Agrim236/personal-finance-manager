@@ -2,6 +2,7 @@
 
 Spring Boot 3 REST API for the **Personal Finance Manager** assignment: user authentication, transactions, categories, savings goals, and financial reports.
 
+**Repository:** https://github.com/Agrim236/personal-finance-manager  
 **Author:** [Agrim236](https://github.com/Agrim236)
 
 ## Tech Stack
@@ -117,7 +118,7 @@ Controller → Service → Repository → Entity
 - [x] Unit tests with JaCoCo ≥80% coverage (`./mvnw verify`)
 - [x] `financial_manager_tests.sh` included
 - [x] Render deployment config (`Dockerfile`, `render.yaml`)
-- [ ] Public GitHub repo URL
+- [x] Public GitHub repo: https://github.com/Agrim236/personal-finance-manager
 - [ ] Live Render URL + E2E screenshot emailed to instructor
 
 See [SUBMISSION.md](SUBMISSION.md) for GitHub push steps.

@@ -1,21 +1,16 @@
 # Assignment Submission Guide
 
-## 1. Push to GitHub ([Agrim236](https://github.com/Agrim236))
+## 1. GitHub repository (done)
 
-Create a new **public** repository on GitHub named `personal-finance-manager` (or use `assignment-intern` if you prefer).
+**Public repo:** https://github.com/Agrim236/personal-finance-manager
 
-From this project folder (`demo`):
+Code is on branch `main`. To push future changes:
 
 ```bash
-git init
 git add .
-git commit -m "Personal Finance Manager assignment - complete API implementation"
-git branch -M main
-git remote add origin https://github.com/Agrim236/personal-finance-manager.git
-git push -u origin main
+git commit -m "Your message"
+git push origin main
 ```
-
-Replace the remote URL if you use a different repo name.
 
 ## 2. Deploy on Render
 
