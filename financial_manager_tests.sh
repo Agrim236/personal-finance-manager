@@ -21,6 +21,11 @@
 # Configuration
 DEFAULT_BASE_URL="http://localhost:8080/api"
 BASE_URL="${1:-$DEFAULT_BASE_URL}"
+# Normalize: base URL must end with /api (assignment API prefix)
+BASE_URL="${BASE_URL%/}"
+if [[ "$BASE_URL" != */api ]]; then
+    BASE_URL="${BASE_URL}/api"
+fi
 
 # Generate unique timestamp for this test run to avoid conflicts
 TEST_TIMESTAMP=$(date +%s)

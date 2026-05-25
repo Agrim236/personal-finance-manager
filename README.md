@@ -43,9 +43,11 @@ From Git Bash or WSL (needs `bash`, `curl`, `bc`):
 
 ```bash
 bash financial_manager_tests.sh http://localhost:5003/api
+# Render example (must include /api — script auto-appends if omitted):
+bash financial_manager_tests.sh https://personal-finance-manager-jvx8.onrender.com/api
 ```
 
-> **Note:** The script defaults to port `8080`; this app uses **5003** unless you set `PORT=8080`.
+> **Important:** Base URL must end with **`/api`**. If you pass only the host (e.g. `https://your-app.onrender.com`), the script will append `/api` automatically.
 
 ## Authentication
 
